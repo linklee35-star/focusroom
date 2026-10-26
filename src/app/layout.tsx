@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { ClientProviders } from "@/components/providers/ClientProviders";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -49,9 +43,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="font-sans min-h-full flex flex-col bg-zinc-50 text-zinc-800">
-        {children}
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-800">
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

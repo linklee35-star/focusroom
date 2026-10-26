@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local logs
-server.log
+# local
+.npm-cache/
 server.err
-
+server.log

@@ -22,7 +22,7 @@ const variantStyles = {
   primary:
     "bg-zinc-900 text-white hover:bg-black shadow-sm",
   secondary:
-    "bg-white/60 backdrop-blur-xl text-zinc-800 border border-white/60 hover:bg-white/80 hover:border-white/80 shadow-sm",
+    "bg-white/30 backdrop-blur-md backdrop-saturate-150 text-zinc-800 border border-white/50 hover:bg-white/40 hover:border-white/70 shadow-[0_1px_0_rgba(255,255,255,0.4)_inset,0_4px_16px_rgba(0,0,0,0.06)]",
   ghost:
     "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100",
   outline:

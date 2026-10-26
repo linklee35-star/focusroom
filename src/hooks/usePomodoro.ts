@@ -23,6 +23,11 @@ function loadStats(): FocusStats {
   return { todayMinutes: 0, thisWeekMinutes: 0, totalMinutes: 0, completedPomodoros: 0, lastDate: "" };
 }
 
+function saveStats(stats: FocusStats): void {
+  if (typeof window === "undefined") return;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stats)); } catch { /* ignore */ }
+}
+
 function loadCustomTimes(): CustomTimes {
   if (typeof window === "undefined") return { focusMinutes: FOCUS_DURATION / 60, breakMinutes: BREAK_DURATION / 60 };
   try {
@@ -43,15 +48,6 @@ export function usePomodoro() {
     breakMinutes: BREAK_DURATION / 60,
   });
 
-  // Load persisted state after mount to avoid SSR hydration mismatch
-  useEffect(() => {
-    setCustomTimes(loadCustomTimes());
-    setStats(loadStats());
-  }, []);
-
-  const getFocusSeconds = () => customTimes.focusMinutes * 60;
-  const getBreakSeconds = () => customTimes.breakMinutes * 60;
-
   const [state, setState] = useState<PomodoroState>({
     isRunning: false,
     isPaused: false,
@@ -69,6 +65,15 @@ export function usePomodoro() {
     lastDate: "",
   });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Load persisted state after mount to avoid SSR hydration mismatch
+  useEffect(() => {
+    setCustomTimes(loadCustomTimes());
+    setStats(loadStats());
+  }, []);
+
+  const getFocusSeconds = () => customTimes.focusMinutes * 60;
+  const getBreakSeconds = () => customTimes.breakMinutes * 60;
 
   // Update durations when custom times change (only if not running)
   const updateDurations = useCallback((newTimes: CustomTimes) => {
@@ -111,7 +116,7 @@ export function usePomodoro() {
                   completedPomodoros: s.completedPomodoros + 1,
                   lastDate: today,
                 };
-                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(newStats)); } catch { /* ignore */ }
+                saveStats(newStats);
                 return newStats;
               });
             }

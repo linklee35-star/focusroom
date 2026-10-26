@@ -17,14 +17,14 @@ interface GlassCardProps {
 
 const variantStyles = {
   dark: {
-    bg: "bg-white/[0.06]",
-    border: "border-white/[0.08]",
-    blur: "backdrop-blur-2xl",
+    bg: "bg-white/[0.08]",
+    border: "border-white/[0.18]",
+    blur: "backdrop-blur-md backdrop-saturate-150",
   },
   white: {
-    bg: "bg-white/60",
-    border: "border-white/40",
-    blur: "backdrop-blur-2xl",
+    bg: "bg-white/30",
+    border: "border-white/50",
+    blur: "backdrop-blur-md backdrop-saturate-150",
   },
 } as const;
 
@@ -56,16 +56,16 @@ export function GlassCard({
 
     if (variant === "white") {
       enterTl.to(card, {
-        backgroundColor: "rgba(255,255,255,0.8)",
+        backgroundColor: "rgba(255,255,255,0.42)",
         borderColor: "rgba(255,255,255,0.65)",
-        boxShadow: "0 12px 40px rgba(0,0,0,0.07)",
+        boxShadow: "0 12px 40px rgba(0,0,0,0.1)",
         duration: 0.4,
       }, 0);
     } else {
       enterTl.to(card, {
-        backgroundColor: "rgba(255,255,255,0.1)",
-        borderColor: "rgba(255,255,255,0.14)",
-        boxShadow: "0 12px 40px rgba(0,0,0,0.15)",
+        backgroundColor: "rgba(255,255,255,0.12)",
+        borderColor: "rgba(255,255,255,0.24)",
+        boxShadow: "0 12px 40px rgba(0,0,0,0.2)",
         duration: 0.4,
       }, 0);
     }
@@ -79,9 +79,9 @@ export function GlassCard({
       .to(card, {
         scale: 1,
         y: 0,
-        backgroundColor: variant === "white" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.06)",
-        borderColor: variant === "white" ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.08)",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
+        backgroundColor: variant === "white" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)",
+        borderColor: variant === "white" ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.18)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
         duration: 0.5,
         ease: "power3.out",
       }, 0);

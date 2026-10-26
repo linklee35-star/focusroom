@@ -140,6 +140,7 @@ export function FocusPanel() {
           className={`pomodoro-bubble${isActive ? " pomodoro-bubble--active" : ""}`}
           aria-label="Expand focus timer"
         >
+          {/* Expand hint tooltip */}
           <span className="pomodoro-bubble__hint">Expand</span>
 
           {/* Mini progress ring */}

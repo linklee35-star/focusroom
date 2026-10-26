@@ -1,15 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 interface KeyMap {
   [key: string]: () => void;
 }
 
 export function useKeyboard(keyMap: KeyMap, enabled = true) {
-  const keyMapRef = useRef(keyMap);
-  keyMapRef.current = keyMap; // always keep latest
-
   useEffect(() => {
     if (!enabled) return;
 
@@ -24,7 +21,7 @@ export function useKeyboard(keyMap: KeyMap, enabled = true) {
         return;
       }
 
-      const handler = keyMapRef.current[e.key];
+      const handler = keyMap[e.key];
       if (handler) {
         e.preventDefault();
         handler();
@@ -33,5 +30,5 @@ export function useKeyboard(keyMap: KeyMap, enabled = true) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [enabled]); // stable — no keyMap in deps
+  }, [keyMap, enabled]);
 }

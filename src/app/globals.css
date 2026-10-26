@@ -10,7 +10,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -98,6 +98,27 @@ body {
   overflow-y: auto;
 }
 
+/* ─── Fullscreen player page ─── */
+
+.player-page {
+  will-change: transform, opacity;
+}
+
+/* Equalizer ring smooth animation */
+.equalizer-ring line {
+  transition: x2 0.08s ease, y2 0.08s ease, opacity 0.2s ease;
+}
+
+/* Ensure player page covers everything */
+@keyframes player-fade-in {
+  from { background: rgba(0, 0, 0, 0); }
+  to { background: rgba(9, 9, 11, 1); }
+}
+
+.player-page {
+  animation: player-fade-in 0.4s ease-out;
+}
+
 /* ─── Reduce motion ─── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -142,24 +163,26 @@ body {
   gap: 12px;
   padding: 10px 16px 10px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.16));
+  backdrop-filter: blur(8px) saturate(2) brightness(1.06);
+  -webkit-backdrop-filter: blur(8px) saturate(2) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.07),
     0 1px 4px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .pomodoro-bubble:hover {
-  background: rgba(255, 255, 255, 0.92);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.26));
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.10),
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 12px 40px rgba(0, 0, 0, 0.11),
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .pomodoro-bubble:active {
@@ -270,23 +293,6 @@ body {
   100% { opacity: 0; transform: translate(-50%, -12px); }
 }
 
-/* ─── Hero title blend into background image ─── */
-
-.hero-title-blend {
-  color: rgba(255, 255, 255, 0.85);
-  mix-blend-mode: overlay;
-  text-shadow:
-    0 1px 12px rgba(0, 0, 0, 0.15),
-    0 0px 40px rgba(135, 206, 235, 0.08);
-  transition: text-shadow 0.4s ease;
-}
-
-.hero-title-blend:hover {
-  text-shadow:
-    0 1px 16px rgba(0, 0, 0, 0.2),
-    0 0px 60px rgba(135, 206, 235, 0.15);
-}
-
 /* ─── Audio player — fixed bubble + expandable panel ─── */
 
 .audio-bubble-wrapper {
@@ -316,14 +322,15 @@ body {
   gap: 8px;
   padding: 8px 14px 8px 10px;
   border-radius: 16px;
-  background: rgba(24, 24, 27, 0.78);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.10));
+  backdrop-filter: blur(10px) saturate(1.8) brightness(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.8) brightness(1.08);
+  border: 1px solid rgba(255, 255, 255, 0.26);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.4),
-    0 1px 4px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 1px 4px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
   cursor: pointer;
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
   pointer-events: auto;
@@ -332,11 +339,12 @@ body {
 }
 
 .audio-bubble:hover {
-  background: rgba(24, 24, 27, 0.88);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 2px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
 }
 
 .audio-bubble:active {
@@ -423,19 +431,4 @@ body {
     width: calc(100vw - 32px);
     left: 0;
   }
-}
-
-/* ─── Recent tracks scrollbar ─── */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 3px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 99px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
 }
